@@ -25,7 +25,9 @@ pipeline {
                
                 echo "author hash is: ${GIT_COMMIT_PRETTY}"
                
-                echo "building project here for :${GIT_BRANCH}"
+                echo "building project here for : ${GIT_BRANCH}"
+
+                echo "testing"
             
             }
         }
@@ -35,18 +37,13 @@ pipeline {
                  script{
                         def serverInfo = jiraGetServerInfo()
                         echo serverInfo.data.toString()
-                        
-               
                         println "${GIT_COMMIT_PRETTY}".tokenize("-")
                         "${GIT_COMMIT_PRETTY}".tokenize(",").each {
                                 println "Number ${it}"
                                 def searchResults = jiraJqlSearch jql: "project = TEST AND issuekey = '${it}'"
                                 def issues = searchResults.data.issues
-                                // jiraAddComment(issueKey: "${it}",
-                                //     body: " Project new  version is ${NEW_VERSION}"
-                                // )
-                                jiraAddComment idOrKey: "${it}", comment: " Project new  version is ${NEW_VERSION}"
                                 
+                                jiraAddComment idOrKey: "${it}", comment: " Project new  version is ${NEW_VERSION}"
                                 def transitions = jiraGetIssueTransitions idOrKey: "${it}"
                                 echo transitions.data.toString()
                                 def transitionInput = [ transition: [ id: '31'] ]
