@@ -10,6 +10,7 @@ pipeline {
         GIT_COMMIT_MSG = sh(script: 'git log -1 --oneline')
         GIT_COMMIT_AUTHOR = sh(script: 'git log --format="medium" -1 ${GIT_COMMIT}')
         GIT_COMMIT_PRETTY = sh(script: 'git log -1 --pretty=%B' , returnStdout: true).trim()
+        GIT_BRANCH = sh(script: 'git branch' , returnStdout: true).trim()
         }
   
     stages {
@@ -24,7 +25,7 @@ pipeline {
                
                 echo "author hash is: ${GIT_COMMIT_PRETTY}"
                
-                echo "building project here"
+                echo "building project here for "${GIT_BRANCH}
             
             }
         }
@@ -48,7 +49,7 @@ pipeline {
                                 
                                 def transitions = jiraGetIssueTransitions idOrKey: "${it}"
                                 echo transitions.data.toString()
-                                def transitionInput = [ transition: [ id: '21'] ]
+                                def transitionInput = [ transition: [ id: '31'] ]
                                 jiraTransitionIssue idOrKey: "${it}", input: transitionInput, site: 'JIRA'
                                 
                             }
