@@ -25,7 +25,7 @@ pipeline {
                
                 echo "author hash is: ${GIT_COMMIT_PRETTY}"
                
-                echo "building project here for "${GIT_BRANCH}
+                echo "building project here for :${GIT_BRANCH}"
             
             }
         }
