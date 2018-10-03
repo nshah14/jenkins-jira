@@ -18,10 +18,7 @@ pipeline {
         // commitHash = checkout(scm).GIT_COMMIT?
         // sh "echo 'Commit hash is: ${commitHash}'"
     }
-    tools { 
-        //jdk 'jdk'
-        //maven 'maven 3.5.3' 
-    }
+  
     stages {
         stage ('Initialize') {
             steps {
