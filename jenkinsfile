@@ -41,9 +41,10 @@ pipeline {
                                 println "Number ${it}"
                                 def searchResults = jiraJqlSearch jql: "project = TEST AND issuekey = '${it}'"
                                 def issues = searchResults.data.issues
-                                jiraAddComment(issueKey: "${it}",
-                                    body: " Project new  version is ${NEW_VERSION}"
-                                )
+                                // jiraAddComment(issueKey: "${it}",
+                                //     body: " Project new  version is ${NEW_VERSION}"
+                                // )
+                                jiraAddComment idOrKey: "${it}", comment: " Project new  version is ${NEW_VERSION}"
                                 
                                 def transitions = jiraGetIssueTransitions idOrKey: "${it}"
                                 echo transitions.data.toString()
