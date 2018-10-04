@@ -40,14 +40,24 @@ pipeline {
                         println "${GIT_COMMIT_PRETTY}".tokenize("-")
                         "${GIT_COMMIT_PRETTY}".tokenize(",").each {
                                 println "Number ${it}"
-                                def searchResults = jiraJqlSearch jql: "project = TEST AND issuekey = '${it}'"
-                                def issues = searchResults.data.issues
+                                def strs = it.split(":")
+                                println "strs ${strs}"
+                                if(strs.length > 2)
+                                {
+                                    echo " wrong msg format it should be (JIRA_TICKET: msg for commit) "
+                                    throw Exception
+                                }else
+                                {
+                                    def searchResults = jiraJqlSearch jql: "project = TEST AND issuekey = '${strs[0]}'"
+                                    def issues = searchResults.data.issues
+                                    
+                                    jiraAddComment idOrKey: "${strs[0]}", comment: "${strs[1]}"
+                                    def transitions = jiraGetIssueTransitions idOrKey: "${strs[0]}"
+                                    echo transitions.data.toString()
+                                    def transitionInput = [ transition: [ id: '31'] ]
+                                    jiraTransitionIssue idOrKey: "${str[0]}", input: transitionInput, site: 'JIRA'
+                                }
                                 
-                                jiraAddComment idOrKey: "${it}", comment: " Project new  version is ${NEW_VERSION}"
-                                def transitions = jiraGetIssueTransitions idOrKey: "${it}"
-                                echo transitions.data.toString()
-                                def transitionInput = [ transition: [ id: '31'] ]
-                                jiraTransitionIssue idOrKey: "${it}", input: transitionInput, site: 'JIRA'
                                 
                             }
                         
