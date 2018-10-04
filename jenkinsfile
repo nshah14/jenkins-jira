@@ -27,7 +27,7 @@ pipeline {
                
                 echo "building project here for : ${GIT_BRANCH}"
 
-                echo "testing"
+                echo "testingn new ticket no. TEST-5"
             
             }
         }
@@ -44,8 +44,8 @@ pipeline {
                                 println "strs ${strs}"
                                 if(strs.length > 2)
                                 {
-                                    echo " wrong msg format it should be (JIRA_TICKET: msg for commit) "
-                                    throw Exception
+                                    echo "wrong msg format it should be (JIRA_TICKET: msg for commit) "
+                                    throw e
                                 }else
                                 {
                                     def searchResults = jiraJqlSearch jql: "project = TEST AND issuekey = '${strs[0]}'"
