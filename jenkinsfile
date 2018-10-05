@@ -31,7 +31,7 @@ pipeline {
 
                 echo " ENVIRONMENT VARIABLE before PYTHON BUILD ${env.PATH_TO_ARTIFCT}"
                 sh '''
-                    python project.py"
+                    python project.py
                 '''
                 echo "ENVIRONMENT VARIABLE after PYTHON BUILD  ${env.PATH_TO_ARTIFCT}"
                 
