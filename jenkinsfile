@@ -37,8 +37,9 @@ pipeline {
                 script{
                     def outputs = sh(script: 'python project.py', returnStdout: true)
                     def  output = outputs.split('\n')
+                    echo "ENVIRONMENT VARIABLE after PYTHON BUILD  ${output}"
                 }
-                echo "ENVIRONMENT VARIABLE after PYTHON BUILD  ${output}"
+                
                 
             
             }
