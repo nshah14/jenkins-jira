@@ -38,8 +38,8 @@ pipeline {
                 script{
                     def outputs = sh(script: 'python project.py', returnStdout: true)
                     def  output = outputs.split('\n')
-                    env.ITEM_URL = output
-                    echo "ENVIRONMENT VARIABLE after PYTHON BUILD  ${env.ITEM_URL}"
+                    ITEM_URL = output
+                    echo "ENVIRONMENT VARIABLE after PYTHON BUILD  ${ITEM_URL}"
                 }
                 
                 
@@ -67,7 +67,7 @@ pipeline {
                                     def searchResults = jiraJqlSearch jql: "project = TEST AND issuekey = '${strs[0]}'"
                                     def issues = searchResults.data.issues
                                     
-                                    jiraAddComment idOrKey: "${strs[0]}", comment: "${strs[1]}"+"${env.ITEM_URL}"
+                                    jiraAddComment idOrKey: "${strs[0]}", comment: "${strs[1]}"+"${ITEM_URL}"
                                     def transitions = jiraGetIssueTransitions idOrKey: "${strs[0]}"
                                     echo transitions.data.toString()
                                     def transitionInput = [ transition: [ id: '31'] ]
