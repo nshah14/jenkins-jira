@@ -35,7 +35,7 @@ pipeline {
                 //     echo $PATH_TO_ARTIFCT
                 // '''
                 script{
-                    def outputs = bat(script: 'python project.py', returnStdout: true)
+                    def outputs = sh(script: 'python project.py', returnStdout: true)
                     def  output = outputs.split('\n')
                 }
                 echo "ENVIRONMENT VARIABLE after PYTHON BUILD  ${output}"
