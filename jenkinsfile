@@ -11,6 +11,7 @@ pipeline {
         GIT_COMMIT_AUTHOR = sh(script: 'git log --format="medium" -1 ${GIT_COMMIT}')
         GIT_COMMIT_PRETTY = sh(script: 'git log -1 --pretty=%B' , returnStdout: true).trim()
         GIT_BRANCH = sh(script: 'git branch' , returnStdout: true).trim()
+        ITEM_URL= ""
         }
   
     stages {
@@ -37,7 +38,8 @@ pipeline {
                 script{
                     def outputs = sh(script: 'python project.py', returnStdout: true)
                     def  output = outputs.split('\n')
-                    echo "ENVIRONMENT VARIABLE after PYTHON BUILD  ${output}"
+                    env.ITEM_URL = output
+                    echo "ENVIRONMENT VARIABLE after PYTHON BUILD  ${env.ITEM_URL}"
                 }
                 
                 
@@ -53,6 +55,7 @@ pipeline {
                         println "${GIT_COMMIT_PRETTY}".tokenize("-")
                         "${GIT_COMMIT_PRETTY}".tokenize(",").each {
                                 println "Number ${it}"
+                              
                                 def strs = it.split(":")
                                 println "strs ${strs}"
                                 if(strs.length > 2)
@@ -64,7 +67,7 @@ pipeline {
                                     def searchResults = jiraJqlSearch jql: "project = TEST AND issuekey = '${strs[0]}'"
                                     def issues = searchResults.data.issues
                                     
-                                    jiraAddComment idOrKey: "${strs[0]}", comment: "${strs[1]}"
+                                    jiraAddComment idOrKey: "${strs[0]}", comment: "${strs[1]}"+"${env.ITEM_URL}"
                                     def transitions = jiraGetIssueTransitions idOrKey: "${strs[0]}"
                                     echo transitions.data.toString()
                                     def transitionInput = [ transition: [ id: '31'] ]
