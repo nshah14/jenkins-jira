@@ -30,11 +30,13 @@ pipeline {
                 echo "testingn new ticket no. TEST-5"
 
                 echo " ENVIRONMENT VARIABLE before PYTHON BUILD ${env.PATH_TO_ARTIFCT}"
-                sh '''
-                    python project.py
-                    echo $PATH_TO_ARTIFCT
-                '''
-                echo "ENVIRONMENT VARIABLE after PYTHON BUILD  ${PATH_TO_ARTIFCT}"
+                // sh '''
+                //     python project.py
+                //     echo $PATH_TO_ARTIFCT
+                // '''
+                def outputs = bat(script: 'python project.py', returnStdout: true)
+                def  output = outputs.split('\n')
+                echo "ENVIRONMENT VARIABLE after PYTHON BUILD  ${output}"
                 
             
             }
