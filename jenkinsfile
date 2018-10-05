@@ -29,11 +29,11 @@ pipeline {
 
                 echo "testingn new ticket no. TEST-5"
 
-                echo " ENVIRONMENT VARIABLE FROM PYTHON BUILD ${env.PATH_TO_ARTIFCT}"
+                echo " ENVIRONMENT VARIABLE before PYTHON BUILD ${env.PATH_TO_ARTIFCT}"
                 sh '''
-                      python3 project.py"
+                    python project.py"
                 '''
-                echo "ENVIRONMENT VARIABLE FROM PYTHON BUILD  ${env.PATH_TO_ARTIFCT}"
+                echo "ENVIRONMENT VARIABLE after PYTHON BUILD  ${env.PATH_TO_ARTIFCT}"
                 
             
             }
