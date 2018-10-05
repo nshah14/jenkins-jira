@@ -67,7 +67,7 @@ pipeline {
                                     def searchResults = jiraJqlSearch jql: "project = TEST AND issuekey = '${strs[0]}'"
                                     def issues = searchResults.data.issues
                                     
-                                    jiraAddComment idOrKey: "${strs[0]}", comment: "${strs[1]}"+"${ITEM_URL}"
+                                    jiraAddComment idOrKey: "${strs[0]}", comment: "${strs[1]} "+"${ITEM_URL}"
                                     def transitions = jiraGetIssueTransitions idOrKey: "${strs[0]}"
                                     echo transitions.data.toString()
                                     def transitionInput = [ transition: [ id: '31'] ]
