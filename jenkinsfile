@@ -28,6 +28,13 @@ pipeline {
                 echo "building project here for : ${GIT_BRANCH}"
 
                 echo "testingn new ticket no. TEST-5"
+
+                echo " ENVIRONMENT VARIABLE FROM PYTHON BUILD ${env.PATH_TO_ARTIFCT}"
+                sh '''
+                      python3 project.py"
+                '''
+                echo "ENVIRONMENT VARIABLE FROM PYTHON BUILD  ${env.PATH_TO_ARTIFCT}"
+                
             
             }
         }
